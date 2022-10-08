@@ -11,10 +11,20 @@ model User {
   id       Int    @id @default(autoincrement())
   username String @unique @db.VarChar(255)
 
+  posts Post[]
+
   @@map("user")
 }
 
-model test {
-  id     Int     @id
-  active Boolean
+model Post {
+  id         Int      @id @default(autoincrement())
+  title      String
+  post       String   @db.VarChar(500)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user    User @relation(fields: [user_id], references: [id])
+  user_id Int
+
+  @@map(name: "post")
 }
